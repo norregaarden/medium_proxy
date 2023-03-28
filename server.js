@@ -7,9 +7,16 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/medium', (req, res) => {
+const vuurl = 'https://feeds.buzzsprout.com/177998.rss'
+
+app.get('/rss/*', (req, res) => {
+
+  // req.path.replace('/rss/', '')
+  
   request(
-    { url: 'https://medium.com/feed/@will-carter' },
+    {
+      url: req.path.replace('/rss/', '')
+    },
     (error, response, body) => {
       if (error || response.statusCode !== 200) {
         return res.status(500).json({ type: 'error', message: err.message })
